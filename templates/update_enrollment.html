@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Update Enrollment</h1>
+
+<form action="{{ url_for('update_enrollment_page', enrollment_id=enrollment.enrollment_id) }}" method="post">
+    <label for="grade">Grade:</label>
+    <input type="text" id="grade" name="grade" value="{{ enrollment.grade }}" required><br>
+
+    <button type="submit">Update Grade</button>
+</form>
+{% endblock %}

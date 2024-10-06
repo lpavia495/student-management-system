@@ -1,0 +1,44 @@
+<!-- templates/enrollments.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Enrollments</h1>
+
+<!-- Form to add a new enrollment -->
+<form action="{{ url_for('enroll_student') }}" method="post">
+    <input type="number" name="student_id" placeholder="Student ID" required>
+    <input type="number" name="course_id" placeholder="Course ID" required>
+    <input type="text" name="grade" placeholder="Grade" required>
+    <button type="submit">Enroll Student</button>
+</form>
+
+<!-- Search bar -->
+<form action="{{ url_for('view_enrollments_page') }}" method="get">
+    <input type="text" name="search" placeholder="Search enrollments...">
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <tr>
+        <th>Student Name</th>
+        <th>Course Name</th>
+        <th>Grade</th>
+        <th>Actions</th>
+    </tr>
+    {% for enrollment in enrollments %}
+    <tr>
+        <td>{{ enrollment.student_name }}</td>
+        <td>{{ enrollment.course_name }}</td>
+        <td>{{ enrollment.grade }}</td>
+        <td>
+            <form action="{{ url_for('update_enrollment_page', enrollment_id=enrollment.enrollment_id) }}" method="get" style="display:inline;">
+                <button type="submit">Update</button>
+            </form>
+            <form action="{{ url_for('delete_enrollment', enrollment_id=enrollment.enrollment_id) }}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
